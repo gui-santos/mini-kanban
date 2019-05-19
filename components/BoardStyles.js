@@ -12,7 +12,7 @@ export const Grid = styled.div`
   }
 `;
 
-export const Column = styled.div`
+export const ColumnContainer = styled.div`
   margin-right: 1rem;
   padding-right: 1rem;
   border-right: 1px solid #dadada;
@@ -27,4 +27,16 @@ export const ColumnTitle = styled.h3`
 export const ColumnContent = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+export const AddButton = styled.button`
+  float: right;
+  border: 0;
+  padding: 0 0.25rem;
+  font-size: 1rem;
+  cursor: pointer;
+
+  :hover {
+    background-color: #dadada;
+  }
 `;
