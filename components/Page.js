@@ -16,8 +16,10 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Layout = styled.div`
+  max-width: 960px;
   height: 100vh;
   padding: 1rem;
+  margin: 0 auto;
 `;
 
 const Page = ({ children }) => (

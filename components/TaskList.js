@@ -1,10 +1,10 @@
 import Task from "./Task";
 
 const TaskList = ({ tasks, setList, filter }) => {
-  const onDelete = deletedTask => {
+  const onDelete = deletedTaskId => {
     const newList = tasks.reduce(
       (allTasks, task) =>
-        task.text !== deletedTask.text ? [...allTasks, task] : allTasks,
+        task.id !== deletedTaskId ? [...allTasks, task] : allTasks,
       []
     );
     setList(newList);
@@ -12,8 +12,8 @@ const TaskList = ({ tasks, setList, filter }) => {
 
   return tasks
     .filter(task => task.status === filter)
-    .map((task, idx) => (
-      <Task key={idx} text={task.text} onDelete={() => onDelete(task)} />
+    .map(task => (
+      <Task key={task.id} text={task.text} onDelete={() => onDelete(task.id)} />
     ));
 };
 
