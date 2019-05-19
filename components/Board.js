@@ -5,17 +5,36 @@ import Column from "./Column";
 
 function Board() {
   const [tasks, setTasks] = useState([
-    { id: 1, status: "todo", text: "this task is in TO DO" },
-    { id: 2, status: "todo", text: "Delete this one" },
-    { id: 3, status: "inProg", text: "this task is IN PROGRESS" },
+    { id: 1, status: "to do", text: "this task is in TO DO" },
+    { id: 2, status: "to do", text: "Delete this one" },
+    { id: 3, status: "in progress", text: "this task is IN PROGRESS" },
     { id: 4, status: "done", text: "this task is DONE" }
   ]);
+  const [counter, setCounter] = useState(tasks.length);
 
   return (
     <Grid>
-      <Column tasks={tasks} setTasks={setTasks} filter="todo" />
-      <Column tasks={tasks} setTasks={setTasks} filter="inProg" />
-      <Column tasks={tasks} setTasks={setTasks} filter="done" />
+      <Column
+        filter="to do"
+        counter={counter}
+        setCounter={setCounter}
+        tasks={tasks}
+        setTasks={setTasks}
+      />
+      <Column
+        filter="in progress"
+        counter={counter}
+        setCounter={setCounter}
+        tasks={tasks}
+        setTasks={setTasks}
+      />
+      <Column
+        filter="done"
+        counter={counter}
+        setCounter={setCounter}
+        tasks={tasks}
+        setTasks={setTasks}
+      />
     </Grid>
   );
 }

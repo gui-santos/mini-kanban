@@ -22,6 +22,7 @@ export const ColumnTitle = styled.h3`
   margin: 0 0 1rem;
   font-size: 0.75rem;
   font-weight: normal;
+  text-transform: uppercase;
 `;
 
 export const ColumnContent = styled.div`

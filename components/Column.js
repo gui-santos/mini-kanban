@@ -6,12 +6,10 @@ import {
 } from "./BoardStyles";
 import TaskList from "./TaskList";
 
-const Column = ({ tasks, setTasks, filter }) => {
+const Column = ({ counter, setCounter, tasks, setTasks, filter }) => {
   const addTask = () => {
-    setTasks([
-      ...tasks,
-      { id: tasks.length + 1, status: filter, text: "new task" }
-    ]);
+    setCounter(counter + 1);
+    setTasks([...tasks, { id: counter + 1, status: filter, text: "new task" }]);
   };
 
   return (

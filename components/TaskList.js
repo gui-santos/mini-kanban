@@ -10,10 +10,18 @@ const TaskList = ({ tasks, setList, filter }) => {
     setList(newList);
   };
 
+  const onEdit = (editedTaskId, text) => {
+    const newList = tasks.reduce((allTasks, task) => {
+      const newTask = task.id === editedTaskId ? { ...task, text } : task;
+      return [...allTasks, newTask];
+    }, []);
+    setList(newList);
+  };
+
   return tasks
     .filter(task => task.status === filter)
     .map(task => (
-      <Task key={task.id} text={task.text} onDelete={() => onDelete(task.id)} />
+      <Task key={task.id} task={task} onDelete={onDelete} onEdit={onEdit} />
     ));
 };
 
