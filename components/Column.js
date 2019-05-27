@@ -8,10 +8,22 @@ import {
 } from "./BoardStyles";
 import Task from "./Task";
 
-const Column = ({ columnId, counter, setCounter, tasks, setTasks, filter }) => {
+const Column = ({
+  columnId,
+  counter,
+  setCounter,
+  tasks,
+  setTasks,
+  label,
+  columns,
+  setColumns
+}) => {
   const addTask = () => {
+    const newTask = { id: counter + 1, status: label, text: "new task" };
     setCounter(counter + 1);
-    setTasks([...tasks, { id: counter + 1, status: filter, text: "new task" }]);
+
+    setTasks([...tasks, newTask]);
+    setColumns({ ...columns, [columnId]: [...columns[columnId], newTask.id] });
   };
 
   const deleteTask = deletedTaskId => {
@@ -20,7 +32,13 @@ const Column = ({ columnId, counter, setCounter, tasks, setTasks, filter }) => {
         task.id !== deletedTaskId ? [...allTasks, task] : allTasks,
       []
     );
+    const newIds = columns[columnId].filter(id => id !== deletedTaskId);
+
     setTasks(newList);
+    setColumns({
+      ...columns,
+      [columnId]: newIds
+    });
   };
 
   const editTask = (editedTaskId, text) => {
@@ -28,6 +46,7 @@ const Column = ({ columnId, counter, setCounter, tasks, setTasks, filter }) => {
       const newTask = task.id === editedTaskId ? { ...task, text } : task;
       return [...allTasks, newTask];
     }, []);
+
     setTasks(newList);
   };
 
@@ -35,14 +54,15 @@ const Column = ({ columnId, counter, setCounter, tasks, setTasks, filter }) => {
     <ColumnContainer>
       <ColumnTitle>
         <AddButton onClick={addTask}>+</AddButton>
-        {filter}
+        {label}
       </ColumnTitle>
       <Droppable droppableId={columnId}>
         {provided => (
           <ColumnContent ref={provided.innerRef} {...provided.droppableProps}>
-            {tasks
-              .filter(task => task.status === filter)
-              .map((task, idx) => (
+            {columns[columnId].map((taskId, idx) => {
+              const task = tasks.find(task => taskId === task.id);
+
+              return (
                 <Task
                   key={task.id}
                   index={idx}
@@ -50,7 +70,8 @@ const Column = ({ columnId, counter, setCounter, tasks, setTasks, filter }) => {
                   onDelete={deleteTask}
                   onEdit={editTask}
                 />
-              ))}
+              );
+            })}
             {provided.placeholder}
           </ColumnContent>
         )}

@@ -13,6 +13,8 @@ export const Grid = styled.div`
 `;
 
 export const ColumnContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-right: 1rem;
   padding-right: 1rem;
   border-right: 1px solid #dadada;
@@ -28,6 +30,7 @@ export const ColumnTitle = styled.h3`
 export const ColumnContent = styled.div`
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 `;
 
 export const AddButton = styled.button`
