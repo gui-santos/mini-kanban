@@ -1,5 +1,3 @@
-// import InlineEdit from "react-edit-inline";
-
 import { TaskCard, CloseButton } from "./TaskStyles";
 
 const Task = ({ task, onDelete, onEdit }) => (

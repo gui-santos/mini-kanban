@@ -6,7 +6,7 @@ import {
 } from "./BoardStyles";
 import TaskList from "./TaskList";
 
-const Column = ({ counter, setCounter, tasks, setTasks, filter }) => {
+const Column = ({ id, counter, setCounter, tasks, setTasks, filter }) => {
   const addTask = () => {
     setCounter(counter + 1);
     setTasks([...tasks, { id: counter + 1, status: filter, text: "new task" }]);
