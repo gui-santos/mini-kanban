@@ -34,16 +34,35 @@ function Board() {
       return;
     }
 
-    // remove draggableId from the tasks ids in the right column
-    const newIds = columns[destination.droppableId];
-    newIds.splice(source.index, 1);
+    const startColumn = columns[source.droppableId];
+    const endColumn = columns[destination.droppableId];
 
-    // add the draggableId in the tasksIds but in the new index
-    newIds.splice(destination.index, 0, draggableId);
+    // remove the task id from the column user started dragging
+    const newStartIds = startColumn;
+    newStartIds.splice(source.index, 1);
 
-    // build new state with newIds
-    const newState = { ...columns, [destination.droppableId]: newIds };
-    setColumns(newState);
+    if (destination.droppableId === source.droppableId) {
+      // the task is being dropped in same column
+      // add the id to the same column
+      newStartIds.splice(destination.index, 0, draggableId);
+
+      // build new state with the new order of ids
+      const newState = { ...columns, [source.droppableId]: newStartIds };
+      setColumns(newState);
+    } else {
+      // the task is being dropped in another column
+      // add the id of the task in this new column
+      const newEndIds = endColumn;
+      newEndIds.splice(destination.index, 0, draggableId);
+
+      // build state for the new order of ids for the starting column and the dropping column
+      const newState = {
+        ...columns,
+        [source.droppableId]: newStartIds,
+        [destination.droppableId]: newEndIds
+      };
+      setColumns(newState);
+    }
   };
 
   return (
