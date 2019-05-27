@@ -1,15 +1,34 @@
+import { Droppable } from "react-beautiful-dnd";
+
 import {
   ColumnContainer,
   ColumnTitle,
   ColumnContent,
   AddButton
 } from "./BoardStyles";
-import TaskList from "./TaskList";
+import Task from "./Task";
 
-const Column = ({ id, counter, setCounter, tasks, setTasks, filter }) => {
+const Column = ({ columnId, counter, setCounter, tasks, setTasks, filter }) => {
   const addTask = () => {
     setCounter(counter + 1);
     setTasks([...tasks, { id: counter + 1, status: filter, text: "new task" }]);
+  };
+
+  const deleteTask = deletedTaskId => {
+    const newList = tasks.reduce(
+      (allTasks, task) =>
+        task.id !== deletedTaskId ? [...allTasks, task] : allTasks,
+      []
+    );
+    setTasks(newList);
+  };
+
+  const editTask = (editedTaskId, text) => {
+    const newList = tasks.reduce((allTasks, task) => {
+      const newTask = task.id === editedTaskId ? { ...task, text } : task;
+      return [...allTasks, newTask];
+    }, []);
+    setTasks(newList);
   };
 
   return (
@@ -18,9 +37,24 @@ const Column = ({ id, counter, setCounter, tasks, setTasks, filter }) => {
         <AddButton onClick={addTask}>+</AddButton>
         {filter}
       </ColumnTitle>
-      <ColumnContent>
-        <TaskList tasks={tasks} setList={setTasks} filter={filter} />
-      </ColumnContent>
+      <Droppable droppableId={columnId}>
+        {provided => (
+          <ColumnContent ref={provided.innerRef} {...provided.droppableProps}>
+            {tasks
+              .filter(task => task.status === filter)
+              .map((task, idx) => (
+                <Task
+                  key={task.id}
+                  index={idx}
+                  task={task}
+                  onDelete={deleteTask}
+                  onEdit={editTask}
+                />
+              ))}
+            {provided.placeholder}
+          </ColumnContent>
+        )}
+      </Droppable>
     </ColumnContainer>
   );
 };

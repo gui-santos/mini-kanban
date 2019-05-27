@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { DragDropContext } from "react-beautiful-dnd";
 
 import { Grid } from "./BoardStyles";
 import Column from "./Column";
@@ -12,29 +13,38 @@ function Board() {
   ]);
   const [counter, setCounter] = useState(tasks.length);
 
+  const handleOnDragEnd = result => {
+    console.log(result);
+  };
+
   return (
     <Grid>
-      <Column
-        filter="to do"
-        counter={counter}
-        setCounter={setCounter}
-        tasks={tasks}
-        setTasks={setTasks}
-      />
-      <Column
-        filter="in progress"
-        counter={counter}
-        setCounter={setCounter}
-        tasks={tasks}
-        setTasks={setTasks}
-      />
-      <Column
-        filter="done"
-        counter={counter}
-        setCounter={setCounter}
-        tasks={tasks}
-        setTasks={setTasks}
-      />
+      <DragDropContext onDragEnd={handleOnDragEnd}>
+        <Column
+          columnId={1}
+          filter="to do"
+          counter={counter}
+          setCounter={setCounter}
+          tasks={tasks}
+          setTasks={setTasks}
+        />
+        <Column
+          columnId={2}
+          filter="in progress"
+          counter={counter}
+          setCounter={setCounter}
+          tasks={tasks}
+          setTasks={setTasks}
+        />
+        <Column
+          columnId={3}
+          filter="done"
+          counter={counter}
+          setCounter={setCounter}
+          tasks={tasks}
+          setTasks={setTasks}
+        />
+      </DragDropContext>
     </Grid>
   );
 }
