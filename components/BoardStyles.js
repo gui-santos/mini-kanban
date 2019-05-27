@@ -6,8 +6,6 @@ export const Grid = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
 
   & > div:last-child {
-    margin-right: 0;
-    padding-right: 0;
     border-right: 0;
   }
 `;
@@ -15,8 +13,7 @@ export const Grid = styled.div`
 export const ColumnContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-right: 1rem;
-  padding-right: 1rem;
+  padding: 0 1rem;
   border-right: 1px solid #dadada;
 `;
 
